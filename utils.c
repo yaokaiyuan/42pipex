@@ -6,11 +6,11 @@
 /*   By: ykai-yua <ykai-yua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 21:03:03 by ykai-yua          #+#    #+#             */
-/*   Updated: 2024/08/03 23:31:39 by ykai-yua         ###   ########.fr       */
+/*   Updated: 2024/08/04 01:18:03 by ykai-yua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "includes/pipex.h"
 
 void	error(void)
 {
@@ -18,7 +18,7 @@ void	error(void)
 	exit(EXIT_FAILURE);
 }
 
-static char	*find_path(char **cmd, char **envp)
+static char	*find_path(char *cmd, char **envp)
 {
 	char	**paths;
 	char	*path;
@@ -28,7 +28,7 @@ static char	*find_path(char **cmd, char **envp)
 	i = 0;
 	while (ft_strnstr(envp[i], "PATH=", 5) == 0)
 		i++;
-	paths = ft_split(envp[i] + 5, ':');
+	paths = ft_split(envp[i] + 6, ':');
 	i = 0;
 	while (paths[i])
 	{
@@ -47,14 +47,14 @@ static char	*find_path(char **cmd, char **envp)
 	return (0);
 }
 
-void	execute(char **av, char **envp)
+void	execute(char *cmd_str, char **envp)
 {
 	char	**cmd;
 	int		i;
 	char	*path;
 
 	i = -1;
-	cmd = ft_split(av, ' ');
+	cmd = ft_split(cmd_str, ' ');
 	path = find_path(cmd[0], envp);
 	if (!path)
 	{

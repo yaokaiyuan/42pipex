@@ -6,11 +6,11 @@
 /*   By: ykai-yua <ykai-yua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 20:38:29 by ykai-yua          #+#    #+#             */
-/*   Updated: 2024/08/03 23:12:29 by ykai-yua         ###   ########.fr       */
+/*   Updated: 2024/08/03 23:55:29 by ykai-yua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "includes/pipex.h"
 
 static void	first_cmd(char **av, char **envp, int *fd)
 {
