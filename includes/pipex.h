@@ -19,6 +19,7 @@
 # include <stdio.h>
 # include <sys/wait.h>
 # include <fcntl.h>
+# include <errno.h>
 # include "../libft/libft.h"
 
 void	error(void);

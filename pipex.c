@@ -69,7 +69,7 @@ int	main(int ac, char **av, char **envp)
 	}
 	else
 	{
-		ft_putstr_fd("ERROR: Wrong arguements\n", 2);
+		ft_putstr_fd("ERROR: Bad arguements\n", 2);
 		ft_putstr_fd("Ex: ./pipex <file1> <cmd1> <cmd2> <file2>\n", 1);
 	}
 	return (0);

@@ -14,7 +14,11 @@
 
 void	error(void)
 {
-	perror("Error");
+	ft_putstr_fd("pipex: ", 2);
+    ft_putstr_fd("infile", 2);
+    ft_putstr_fd(": ", 2);
+    ft_putstr_fd(strerror(errno), 2);
+	ft_putstr_fd("\n", 2);
 	exit(EXIT_FAILURE);
 }
 
@@ -28,7 +32,7 @@ static char	*find_path(char *cmd, char **envp)
 	i = 0;
 	while (ft_strnstr(envp[i], "PATH=", 5) == 0)
 		i++;
-	paths = ft_split(envp[i] + 6, ':');
+	paths = ft_split(envp[i] + 5, ':');
 	i = 0;
 	while (paths[i])
 	{
