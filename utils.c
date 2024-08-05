@@ -6,18 +6,18 @@
 /*   By: ykai-yua <ykai-yua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 21:03:03 by ykai-yua          #+#    #+#             */
-/*   Updated: 2024/08/04 01:18:03 by ykai-yua         ###   ########.fr       */
+/*   Updated: 2024/08/05 23:32:08 by ykai-yua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/pipex.h"
 
-void	error(void)
+void	error(char *infile)
 {
 	ft_putstr_fd("pipex: ", 2);
-    ft_putstr_fd("infile", 2);
-    ft_putstr_fd(": ", 2);
-    ft_putstr_fd(strerror(errno), 2);
+	ft_putstr_fd(infile, 2);
+	ft_putstr_fd(": ", 2);
+	ft_putstr_fd(strerror(errno), 2);
 	ft_putstr_fd("\n", 2);
 	exit(EXIT_FAILURE);
 }
@@ -65,8 +65,8 @@ void	execute(char *cmd_str, char **envp)
 		while (cmd[++i])
 			free(cmd[i]);
 		free(cmd);
-		error();
+		error(cmd_str);
 	}
 	if (execve(path, cmd, envp) == -1)
-		error();
+		error(cmd_str);
 }

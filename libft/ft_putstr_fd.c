@@ -6,7 +6,7 @@
 /*   By: ykai-yua <ykai-yua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 03:20:33 by ykai-yua          #+#    #+#             */
-/*   Updated: 2024/02/25 03:21:56 by ykai-yua         ###   ########.fr       */
+/*   Updated: 2024/08/06 01:12:41 by ykai-yua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,13 @@
 
 void	ft_putstr_fd(char *s, int fd)
 {
+	size_t	i;
+
 	if (s)
 	{
-		while (*s)
-			write (fd, s++, 1);
+		i = 0;
+		while (s[i])
+			i++;
+		write (fd, s, i);
 	}
 }
