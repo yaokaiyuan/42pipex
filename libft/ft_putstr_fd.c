@@ -6,13 +6,13 @@
 /*   By: ykai-yua <ykai-yua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 03:20:33 by ykai-yua          #+#    #+#             */
-/*   Updated: 2024/08/06 01:12:41 by ykai-yua         ###   ########.fr       */
+/*   Updated: 2024/08/06 07:18:48 by ykai-yua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putstr_fd(char *s, int fd)
+void	ft_putstr_fd(const char *s, int fd)
 {
 	size_t	i;
 

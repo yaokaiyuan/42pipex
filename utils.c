@@ -6,13 +6,13 @@
 /*   By: ykai-yua <ykai-yua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 21:03:03 by ykai-yua          #+#    #+#             */
-/*   Updated: 2024/08/05 23:32:08 by ykai-yua         ###   ########.fr       */
+/*   Updated: 2024/08/06 07:54:51 by ykai-yua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/pipex.h"
 
-void	error(char *infile)
+void	error(const char *infile)
 {
 	ft_putstr_fd("pipex: ", 2);
 	ft_putstr_fd(infile, 2);
@@ -48,7 +48,7 @@ static char	*find_path(char *cmd, char **envp)
 	while (paths[++i])
 		free(paths[i]);
 	free(paths);
-	return (0);
+	return (NULL);
 }
 
 void	execute(char *cmd_str, char **envp)
@@ -65,7 +65,9 @@ void	execute(char *cmd_str, char **envp)
 		while (cmd[++i])
 			free(cmd[i]);
 		free(cmd);
-		error(cmd_str);
+		ft_putstr_fd(cmd_str, 2);
+		ft_putstr_fd(": command not found\n", 2);
+		exit(127);
 	}
 	if (execve(path, cmd, envp) == -1)
 		error(cmd_str);

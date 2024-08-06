@@ -6,7 +6,7 @@
 /*   By: ykai-yua <ykai-yua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 19:18:37 by ykai-yua          #+#    #+#             */
-/*   Updated: 2024/08/05 23:10:02 by ykai-yua         ###   ########.fr       */
+/*   Updated: 2024/08/06 07:18:35 by ykai-yua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <errno.h>
 # include "../libft/libft.h"
 
-void	error(char *infile);
+void	error(const char *infile);
 void	execute(char *cmd_str, char **envp);
 
 #endif
