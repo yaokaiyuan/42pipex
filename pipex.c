@@ -18,7 +18,7 @@ static void	first_cmd(char **av, char **envp, int *fd)
 
 	filein = open(av[1], O_RDONLY);
 	if (filein == -1)
-		error(av[1]);
+		error(av[1], 0);
 	close(fd[0]);
 	dup2(fd[1], STDOUT_FILENO);
 	dup2(filein, STDIN_FILENO);
@@ -33,7 +33,7 @@ static void	second_cmd(char **av, char **envp, int *fd)
 
 	fileout = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	if (fileout == -1)
-		error(av[4]);
+		error(av[4], 0);
 	close(fd[1]);
 	dup2(fd[0], STDIN_FILENO);
 	dup2(fileout, STDOUT_FILENO);
@@ -49,7 +49,7 @@ static pid_t	create_process(void (*func)(char **, char **, int *)
 
 	pid = fork();
 	if (pid == -1)
-		error("fork");
+		error("fork", 0);
 	if (pid == 0)
 		func(av, envp, fd);
 	return (pid);
@@ -64,7 +64,7 @@ int	main(int ac, char **av, char **envp)
 	if (ac == 5)
 	{
 		if (pipe(fd) == -1)
-			error("pipe");
+			error("pipe", 0);
 		pid1 = create_process(first_cmd, av, envp, fd);
 		pid2 = create_process(second_cmd, av, envp, fd);
 		close(fd[0]);

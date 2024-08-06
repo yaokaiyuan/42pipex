@@ -22,7 +22,7 @@
 # include <errno.h>
 # include "../libft/libft.h"
 
-void	error(const char *infile);
+void	error(const char *infile, int err);
 void	execute(char *cmd_str, char **envp);
 
 #endif

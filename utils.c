@@ -12,12 +12,18 @@
 
 #include "includes/pipex.h"
 
-void	error(const char *infile)
+void	error(const char *infile, int err)
 {
 	ft_putstr_fd("pipex: ", 2);
 	ft_putstr_fd(infile, 2);
 	ft_putstr_fd(": ", 2);
-	ft_putstr_fd(strerror(errno), 2);
+	if (err == 1)
+	{
+		ft_putstr_fd("command not found\n", 2);
+		exit(127);
+	}
+	else
+		ft_putstr_fd(strerror(errno), 2);
 	ft_putstr_fd("\n", 2);
 	exit(EXIT_FAILURE);
 }
@@ -51,6 +57,35 @@ static char	*find_path(char *cmd, char **envp)
 	return (NULL);
 }
 
+static void	check_cmd_exist(char *cmd, char **envp)
+{
+	char	**paths;
+	char	*path;
+	int		i;
+	char	*part_path;
+
+	i = 0;
+	while (ft_strnstr(envp[i], "PATH=", 5) == 0)
+		i++;
+	paths = ft_split(envp[i] + 5, ':');
+	i = 0;
+	while (paths[i])
+	{
+		part_path = ft_strjoin(paths[i], "/");
+		path = ft_strjoin(part_path, cmd);
+		free(part_path);
+		if (access(path, X_OK) != 0)
+			error(cmd, 1);
+		free(path);
+		i++;
+	}
+	i = -1;
+	while (paths[++i])
+		free(paths[i]);
+	free(paths);
+	error(cmd, 0);
+}
+
 void	execute(char *cmd_str, char **envp)
 {
 	char	**cmd;
@@ -62,13 +97,11 @@ void	execute(char *cmd_str, char **envp)
 	path = find_path(cmd[0], envp);
 	if (!path)
 	{
+		check_cmd_exist(cmd[0], envp);
 		while (cmd[++i])
 			free(cmd[i]);
 		free(cmd);
-		ft_putstr_fd(cmd_str, 2);
-		ft_putstr_fd(": command not found\n", 2);
-		exit(127);
 	}
 	if (execve(path, cmd, envp) == -1)
-		error(cmd_str);
+		error(cmd_str, 0);
 }
