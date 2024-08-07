@@ -6,23 +6,11 @@
 /*   By: ykai-yua <ykai-yua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 21:03:03 by ykai-yua          #+#    #+#             */
-/*   Updated: 2024/08/06 07:54:51 by ykai-yua         ###   ########.fr       */
+/*   Updated: 2024/08/07 13:45:26 by ykai-yua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/pipex.h"
-
-void	free_array(char **array)
-{
-	int i = 0;
-
-	while (array[i])
-	{
-		free(array[i]);
-		i++;
-	}
-	free(array);
-}
 
 void	error(const char *infile, int err)
 {
@@ -34,12 +22,24 @@ void	error(const char *infile, int err)
 		exit(127);
 	}
 	else
-	ft_putstr_fd("pipex: ", 2);
-	ft_putstr_fd(infile, 2);
-	ft_putstr_fd(": ", 2);
-	ft_putstr_fd(strerror(errno), 2);
-	ft_putstr_fd("\n", 2);
-	exit(EXIT_FAILURE);
+	{
+		ft_putstr_fd("pipex: ", 2);
+		ft_putstr_fd(infile, 2);
+		ft_putstr_fd(": ", 2);
+		ft_putstr_fd(strerror(errno), 2);
+		ft_putstr_fd("\n", 2);
+		exit(EXIT_FAILURE);
+	}
+}
+
+static char	**get_paths(char **envp)
+{
+	int	i;
+
+	i = 0;
+	while (ft_strnstr(envp[i], "PATH=", 5) == 0)
+		i++;
+	return (ft_split(envp[i] + 5, ':'));
 }
 
 static char	*find_path(char *cmd, char **envp)
@@ -49,10 +49,7 @@ static char	*find_path(char *cmd, char **envp)
 	int		i;
 	char	*part_path;
 
-	i = 0;
-	while (ft_strnstr(envp[i], "PATH=", 5) == 0)
-		i++;
-	paths = ft_split(envp[i] + 5, ':');
+	paths = get_paths(envp);
 	i = 0;
 	while (paths[i])
 	{
@@ -78,10 +75,7 @@ static int	check_cmd_exist(char *cmd, char **envp)
 	int		i;
 	char	*part_path;
 
-	i = 0;
-	while (ft_strnstr(envp[i], "PATH=", 5) == 0)
-		i++;
-	paths = ft_split(envp[i] + 5, ':');
+	paths = get_paths(envp);
 	i = 0;
 	while (paths[i])
 	{
@@ -92,13 +86,13 @@ static int	check_cmd_exist(char *cmd, char **envp)
 		{
 			free_array(paths);
 			free(path);
-			return (0); //find
+			return (0);
 		}
 		free(path);
 		i++;
 	}
 	free_array(paths);
-	return (1); // not found
+	return (1);
 }
 
 void	execute(char *cmd_str, char **envp)

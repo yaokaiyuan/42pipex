@@ -6,11 +6,24 @@
 /*   By: ykai-yua <ykai-yua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 20:38:29 by ykai-yua          #+#    #+#             */
-/*   Updated: 2024/08/06 07:22:22 by ykai-yua         ###   ########.fr       */
+/*   Updated: 2024/08/07 13:40:22 by ykai-yua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/pipex.h"
+
+void	free_array(char **array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i])
+	{
+		free(array[i]);
+		i++;
+	}
+	free(array);
+}
 
 static void	first_cmd(char **av, char **envp, int *fd)
 {
