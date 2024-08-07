@@ -22,6 +22,7 @@
 # include <errno.h>
 # include "../libft/libft.h"
 
+void	free_array(char **array);
 void	error(const char *infile, int err);
 void	execute(char *cmd_str, char **envp);
 

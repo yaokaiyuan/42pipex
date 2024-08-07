@@ -60,6 +60,7 @@ int	main(int ac, char **av, char **envp)
 	int		fd[2];
 	pid_t	pid1;
 	pid_t	pid2;
+	int		status;
 
 	if (ac == 5)
 	{
@@ -70,7 +71,9 @@ int	main(int ac, char **av, char **envp)
 		close(fd[0]);
 		close(fd[1]);
 		waitpid(pid1, NULL, 0);
-		waitpid(pid2, NULL, 0);
+		waitpid(pid2, &status, 0);
+		if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
+			exit(EXIT_FAILURE);
 	}
 	else
 	{

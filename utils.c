@@ -12,18 +12,32 @@
 
 #include "includes/pipex.h"
 
+void	free_array(char **array)
+{
+	int i = 0;
+
+	while (array[i])
+	{
+		free(array[i]);
+		i++;
+	}
+	free(array);
+}
+
 void	error(const char *infile, int err)
 {
-	ft_putstr_fd("pipex: ", 2);
-	ft_putstr_fd(infile, 2);
-	ft_putstr_fd(": ", 2);
 	if (err == 1)
 	{
+		ft_putstr_fd(infile, 2);
+		ft_putstr_fd(": ", 2);
 		ft_putstr_fd("command not found\n", 2);
 		exit(127);
 	}
 	else
-		ft_putstr_fd(strerror(errno), 2);
+	ft_putstr_fd("pipex: ", 2);
+	ft_putstr_fd(infile, 2);
+	ft_putstr_fd(": ", 2);
+	ft_putstr_fd(strerror(errno), 2);
 	ft_putstr_fd("\n", 2);
 	exit(EXIT_FAILURE);
 }
@@ -46,18 +60,18 @@ static char	*find_path(char *cmd, char **envp)
 		path = ft_strjoin(part_path, cmd);
 		free(part_path);
 		if (access(path, F_OK) == 0)
+		{
+			free_array(paths);
 			return (path);
+		}
 		free(path);
 		i++;
 	}
-	i = -1;
-	while (paths[++i])
-		free(paths[i]);
-	free(paths);
+	free_array(paths);
 	return (NULL);
 }
 
-static void	check_cmd_exist(char *cmd, char **envp)
+static int	check_cmd_exist(char *cmd, char **envp)
 {
 	char	**paths;
 	char	*path;
@@ -74,34 +88,38 @@ static void	check_cmd_exist(char *cmd, char **envp)
 		part_path = ft_strjoin(paths[i], "/");
 		path = ft_strjoin(part_path, cmd);
 		free(part_path);
-		if (access(path, X_OK) != 0)
-			error(cmd, 1);
+		if (access(path, X_OK) == 0)
+		{
+			free_array(paths);
+			free(path);
+			return (0); //find
+		}
 		free(path);
 		i++;
 	}
-	i = -1;
-	while (paths[++i])
-		free(paths[i]);
-	free(paths);
-	error(cmd, 0);
+	free_array(paths);
+	return (1); // not found
 }
 
 void	execute(char *cmd_str, char **envp)
 {
 	char	**cmd;
-	int		i;
 	char	*path;
 
-	i = -1;
 	cmd = ft_split(cmd_str, ' ');
 	path = find_path(cmd[0], envp);
 	if (!path)
 	{
-		check_cmd_exist(cmd[0], envp);
-		while (cmd[++i])
-			free(cmd[i]);
-		free(cmd);
+		if (check_cmd_exist(cmd[0], envp) == 1)
+		{
+			free_array(cmd);
+			error(cmd_str, 1);
+		}
+		else
+			error(cmd_str, 0);
 	}
 	if (execve(path, cmd, envp) == -1)
 		error(cmd_str, 0);
+	free_array(cmd);
+	free(path);
 }
