@@ -1,30 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ykai-yua <ykai-yua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/15 19:18:37 by ykai-yua          #+#    #+#             */
-/*   Updated: 2024/08/08 18:33:56 by ykai-yua         ###   ########.fr       */
+/*   Created: 2024/08/08 18:22:08 by ykai-yua          #+#    #+#             */
+/*   Updated: 2024/08/08 18:37:42 by ykai-yua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "includes/pipex.h"
 
-# include <stdlib.h>
-# include <unistd.h>
-# include <string.h>
-# include <stdio.h>
-# include <sys/wait.h>
-# include <fcntl.h>
-# include <errno.h>
-# include "../libft/libft.h"
-
-void	free_array(char **array);
-void	error(const char *infile, int err);
-char	*check_cmd(char *cmd);
-void	execute(char *cmd_str, char **envp);
-
-#endif
+char	*check_cmd(char *cmd)
+{
+	if (cmd[0] == '/' || (cmd[0] == '.' && cmd[1] == '/'))
+	{
+		if (access(cmd, F_OK) == 0)
+			return (ft_strdup(cmd));
+		return (NULL);
+	}
+	return (NULL);
+}

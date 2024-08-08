@@ -6,14 +6,15 @@
 #    By: ykai-yua <ykai-yua@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/15 19:21:28 by ykai-yua          #+#    #+#              #
-#    Updated: 2024/08/03 22:43:46 by ykai-yua         ###   ########.fr        #
+#    Updated: 2024/08/08 18:22:59 by ykai-yua         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = pipex
 
 SRCS = pipex.c \
-			utils.c
+			utils.c \
+			utils2.c
 OBJS = $(SRCS:.c=.o)
 
 CC = gcc

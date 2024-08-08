@@ -6,7 +6,7 @@
 /*   By: ykai-yua <ykai-yua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 21:03:03 by ykai-yua          #+#    #+#             */
-/*   Updated: 2024/08/07 13:45:26 by ykai-yua         ###   ########.fr       */
+/*   Updated: 2024/08/08 18:35:12 by ykai-yua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,9 @@ static char	*find_path(char *cmd, char **envp)
 	int		i;
 	char	*part_path;
 
+	path = check_cmd(cmd);
+	if (path)
+		return (path);
 	paths = get_paths(envp);
 	i = 0;
 	while (paths[i])
