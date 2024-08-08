@@ -6,7 +6,7 @@
 #    By: ykai-yua <ykai-yua@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/19 15:17:02 by ykai-yua          #+#    #+#              #
-#    Updated: 2024/03/07 12:23:35 by ykai-yua         ###   ########.fr        #
+#    Updated: 2024/08/08 19:28:22 by ykai-yua         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,7 @@ SRCS	=	ft_atoi.c \
 OBJS	= $(SRCS:.c=.o)
 RM		= rm -f
 LIBC	= ar -rcs
-FLAGS	= -Wall -Wextra -Werror
+FLAGS	= -Wall -Wextra -Werror -g3 -fsanitize=address,undefined
 INCS	= .
 
 .c.o :

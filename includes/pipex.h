@@ -6,7 +6,7 @@
 /*   By: ykai-yua <ykai-yua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 19:18:37 by ykai-yua          #+#    #+#             */
-/*   Updated: 2024/08/08 18:33:56 by ykai-yua         ###   ########.fr       */
+/*   Updated: 2024/08/08 20:13:04 by ykai-yua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 
 void	free_array(char **array);
 void	error(const char *infile, int err);
+char	**get_paths(char **envp);
+char	**return_paths(char *cmd, char **envp);
 char	*check_cmd(char *cmd);
 void	execute(char *cmd_str, char **envp);
 

@@ -6,7 +6,7 @@
 /*   By: ykai-yua <ykai-yua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 18:22:08 by ykai-yua          #+#    #+#             */
-/*   Updated: 2024/08/08 18:37:42 by ykai-yua         ###   ########.fr       */
+/*   Updated: 2024/08/08 20:14:49 by ykai-yua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,4 +21,14 @@ char	*check_cmd(char *cmd)
 		return (NULL);
 	}
 	return (NULL);
+}
+
+char	**return_paths(char *cmd, char **envp)
+{
+	char	**paths;
+
+	paths = get_paths(envp);
+	if (!paths)
+		error(cmd, 2);
+	return (paths);
 }

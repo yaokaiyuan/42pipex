@@ -6,7 +6,7 @@
 /*   By: ykai-yua <ykai-yua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 21:03:03 by ykai-yua          #+#    #+#             */
-/*   Updated: 2024/08/08 18:35:12 by ykai-yua         ###   ########.fr       */
+/*   Updated: 2024/08/08 20:12:39 by ykai-yua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,24 @@ void	error(const char *infile, int err)
 		ft_putstr_fd("pipex: ", 2);
 		ft_putstr_fd(infile, 2);
 		ft_putstr_fd(": ", 2);
-		ft_putstr_fd(strerror(errno), 2);
+		if (err == 2)
+			ft_putstr_fd("No such file or directory", 2);
+		else
+			ft_putstr_fd(strerror(errno), 2);
 		ft_putstr_fd("\n", 2);
 		exit(EXIT_FAILURE);
 	}
 }
 
-static char	**get_paths(char **envp)
+char	**get_paths(char **envp)
 {
 	int	i;
 
 	i = 0;
-	while (ft_strnstr(envp[i], "PATH=", 5) == 0)
+	while (envp[i] && ft_memcmp(envp[i], "PATH=", 5) != 0)
 		i++;
+	if (envp[i] == NULL)
+		return (NULL);
 	return (ft_split(envp[i] + 5, ':'));
 }
 
@@ -52,9 +57,9 @@ static char	*find_path(char *cmd, char **envp)
 	path = check_cmd(cmd);
 	if (path)
 		return (path);
-	paths = get_paths(envp);
+	paths = return_paths(cmd, envp);
 	i = 0;
-	while (paths[i])
+	while (paths && paths[i])
 	{
 		part_path = ft_strjoin(paths[i], "/");
 		path = ft_strjoin(part_path, cmd);
@@ -80,7 +85,7 @@ static int	check_cmd_exist(char *cmd, char **envp)
 
 	paths = get_paths(envp);
 	i = 0;
-	while (paths[i])
+	while (paths && paths[i])
 	{
 		part_path = ft_strjoin(paths[i], "/");
 		path = ft_strjoin(part_path, cmd);

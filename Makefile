@@ -6,7 +6,7 @@
 #    By: ykai-yua <ykai-yua@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/15 19:21:28 by ykai-yua          #+#    #+#              #
-#    Updated: 2024/08/08 18:22:59 by ykai-yua         ###   ########.fr        #
+#    Updated: 2024/08/08 19:28:18 by ykai-yua         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ SRCS = pipex.c \
 OBJS = $(SRCS:.c=.o)
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -Iincludes -g3
+CFLAGS = -Wall -Wextra -Werror -Iincludes -g3 -fsanitize=address,undefined
 
 RM = rm -rf
 
